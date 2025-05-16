@@ -1,0 +1,15 @@
+<ion-header>
+  <ion-toolbar class="custom-toolbar">
+    <ion-title>Mi Galería</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding content-background" scrollable>
+  <ion-grid>
+    <ion-row justify-content-center>
+      <ion-col size="12" *ngFor="let image of images">
+        <img [src]="image" alt="Imagen" />
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

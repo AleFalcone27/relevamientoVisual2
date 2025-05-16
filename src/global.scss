@@ -35,3 +35,37 @@
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import '@ionic/angular/css/palettes/dark.system.css';
+
+.content-background {
+  --background: #36B94F; // 🎨 Cambiá este color por el que prefieras
+  background-color: var(--background);
+}
+
+ion-header, ion-toolbar {
+  --background: #2E7D32; /* verde oscuro */
+  background-color: var(--background);
+  color: white;
+}
+
+ion-toolbar ion-title {
+  text-align: center;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  right: 0;
+}
+
+.custom-spinner-class {
+  --background: transparent;
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+ion-loading.custom-spinner-class .loading-wrapper {
+  background: transparent !important;
+  box-shadow: none !important;
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}

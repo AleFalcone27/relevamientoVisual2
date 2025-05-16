@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Cosas Feas</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding content-background">
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12" *ngFor="let image of images">
+        <img
+          [src]="image"
+          (click)="voteForImage(image)"
+          alt="Imagen"
+          [class.voted]="image === lastVotedUrl"
+          class="votable-image"
+        />
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-fab vertical="bottom" horizontal="end">
+    <ion-fab-button class="fab-button">
+      <ion-icon name="add-outline" class="fab-icon"></ion-icon>
+    </ion-fab-button>
+
+    <ion-fab-list side="top">
+      <ion-fab-button class="fab-button" (click)="openCamera()">
+        <ion-icon name="camera-outline" class="fab-icon"></ion-icon>
+      </ion-fab-button>
+
+      <ion-fab-button class="fab-button" (click)="openGallery()">
+        <ion-icon name="image-outline" class="fab-icon"></ion-icon>
+      </ion-fab-button>
+
+      <ion-fab-button class="fab-button" (click)="goToCharts()">
+        <ion-icon name="pie-chart-outline" class="fab-icon"></ion-icon>
+      </ion-fab-button>
+
+      <ion-fab-button class="fab-button" (click)="goToUserGallery()">
+        <ion-icon name="albums-outline" class="fab-icon"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+</ion-content>

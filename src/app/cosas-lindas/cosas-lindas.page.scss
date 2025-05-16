@@ -1,0 +1,55 @@
+ion-fab-button {
+  transition: transform 0.3s ease;
+}
+
+ion-fab-button.clicked {
+  transform: rotate(45deg);  /* Rotate the FAB button */
+}
+
+.fab-button {
+  --background: white;  
+  --color: #6FC530;      
+}
+
+.fab-icon {
+  color: #6FC530;       
+}
+
+
+.content-background {
+  --background: #36B94F;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+ion-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+ion-img,
+img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.votable-image {
+  width: 100%;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border 0.3s ease;
+}
+
+img.voted {
+  border: 5px solid rgba(0, 255, 0, 0.7); // Borde verde intenso
+  border-radius: 12px;
+  box-shadow: 0 0 18px rgba(0, 255, 0, 0.6); // Sombra más marcada
+  transform: scale(1.08); // Aumenta el tamaño visualmente
+}
+
