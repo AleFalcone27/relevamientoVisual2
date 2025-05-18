@@ -1,6 +1,9 @@
 <ion-header [translucent]="true">
   <ion-toolbar class="custom-toolbar">
     <ion-title>Gráficos</ion-title>
+    <ion-buttons slot="end">
+        <ion-back-button (click)="navBack()" ></ion-back-button>
+      </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -18,4 +21,8 @@
       style="width: 50px; height: 50px; object-fit: cover; vertical-align: middle; border-radius: 5px; margin-right: 10px;">
     <span style="font-weight: bold;">Votos: {{ img.vote_count }}</span>
   </div>
+</div>
+
+<div *ngIf="isLoading" class="spinner-overlay">
+  <ion-spinner name="bubbles" ></ion-spinner>
 </div>

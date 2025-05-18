@@ -1,55 +1,127 @@
-ion-fab-button {
-  transition: transform 0.3s ease;
-}
+// ion-fab-button {
+//   transition: transform 0.3s ease;
+// }
 
-ion-fab-button.clicked {
-  transform: rotate(45deg);  /* Rotate the FAB button */
-}
+// ion-fab-button.clicked {
+//   transform: rotate(45deg);  /* Rotate the FAB button */
+// }
 
-.fab-button {
-  --background: white;  
-  --color: #6FC530;      
-}
+// .fab-button {
+//   --background: white;  
+//   --color: #6FC530;      
+// }
 
-.fab-icon {
-  color: #6FC530;       
-}
+// .fab-icon {
+//   color: #6FC530;       
+// }
+
+
+// .content-background {
+//   --background: #36B94F;
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: center;
+//   align-items: center;
+// }
+
+// ion-slide {
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+// }
+
+// ion-img,
+// img {
+//   width: 100%;
+//   height: 200px;
+//   object-fit: cover;
+//   border-radius: 8px;
+//   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+// }
+
+// .votable-image {
+//   width: 100%;
+//   border-radius: 12px;
+//   margin-bottom: 12px;
+//   transition: transform 0.3s ease, box-shadow 0.3s ease, border 0.3s ease;
+// }
+
+// img.voted {
+//   border: 5px solid rgba(0, 255, 0, 0.7); // Borde verde intenso
+//   border-radius: 12px;
+//   box-shadow: 0 0 18px rgba(0, 255, 0, 0.6); // Sombra más marcada
+//   transform: scale(1.08); // Aumenta el tamaño visualmente
+// }
+
 
 
 .content-background {
-  --background: #36B94F;
+  --background: #36b94f;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
 }
 
-ion-slide {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-ion-img,
-img {
+.votable-image {
   width: 100%;
   height: 200px;
   object-fit: cover;
   border-radius: 8px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-}
-
-.votable-image {
-  width: 100%;
-  border-radius: 12px;
   margin-bottom: 12px;
   transition: transform 0.3s ease, box-shadow 0.3s ease, border 0.3s ease;
 }
 
-img.voted {
-  border: 5px solid rgba(0, 255, 0, 0.7); // Borde verde intenso
+.voted {
+  border: 5px solid rgba(0, 255, 0, 0.7);
   border-radius: 12px;
-  box-shadow: 0 0 18px rgba(0, 255, 0, 0.6); // Sombra más marcada
-  transform: scale(1.08); // Aumenta el tamaño visualmente
+  box-shadow: 0 0 18px rgba(0, 255, 0, 0.6);
+  transform: scale(1.08);
 }
 
+.fab-button {
+  --background: white;
+  --color: #6fc530;
+}
+
+.fab-icon {
+  color: #6fc530;
+}
+
+
+.image-container {
+  position: relative;
+  cursor: pointer;
+
+  img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 8px;
+  }
+
+  .image-info {
+    position: absolute;
+    bottom: 10px;       /* Ponelo cerca del borde inferior o donde prefieras */
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
+    padding: 4px 8px;
+    border-radius: 8px;
+    width: auto;
+    max-width: 90%;
+    font-size: 0.9rem;
+    pointer-events: none;
+  }
+}
+
+.email {
+  font-weight: bold;
+}
+
+.date {
+  font-style: italic;
+  font-size: 0.7rem;
+}

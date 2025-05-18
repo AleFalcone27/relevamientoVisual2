@@ -6,17 +6,13 @@ const config: CapacitorConfig = {
   webDir: 'www',
     plugins: {
     SplashScreen: {
-      launchAutoHide: true,
-      androidSplashResourceName: "splash",
-      androidScaleType: "CENTER_CROP",
-      showSpinner: true,
-      androidSpinnerStyle: "large",
+      launchShowDuration: 1000,
+      launchAutoHide: false, 
       splashFullScreen: true,
       splashImmersive: true,
-      layoutName: "launch_screen",
-      useDialog: true,
-    },
-  },
+      androidScaleType: "CENTER_CROP",
+      showSpinner: false
+    }},
 };
 
 export default config;

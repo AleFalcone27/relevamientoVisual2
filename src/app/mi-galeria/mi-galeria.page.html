@@ -1,6 +1,9 @@
 <ion-header>
   <ion-toolbar class="custom-toolbar">
     <ion-title>Mi Galería</ion-title>
+      <ion-buttons slot="end">
+        <ion-back-button (click)="navBack()" ></ion-back-button>
+      </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -13,3 +16,7 @@
     </ion-row>
   </ion-grid>
 </ion-content>
+
+<div *ngIf="isLoading" class="spinner-overlay">
+  <ion-spinner name="bubbles" ></ion-spinner>
+</div>

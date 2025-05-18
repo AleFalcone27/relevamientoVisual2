@@ -17,6 +17,7 @@ import { SpinnerService } from '../services/spinner.service';
   imports: [IonicModule, CommonModule, FormsModule]
 })
 export class MainPage implements OnInit {
+isLoading: any;
 
   constructor(private router: Router,public authService: AuthService, private spinnerService:SpinnerService ) {
      addIcons({

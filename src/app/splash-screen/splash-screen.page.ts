@@ -9,16 +9,10 @@ import { Router } from '@angular/router';
   templateUrl: './splash-screen.page.html',
   styleUrls: ['./splash-screen.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
+  imports: [IonContent, CommonModule, FormsModule]
 })
-export class SplashScreenPage implements OnInit {
+export class SplashScreenPage {
 
   constructor(private router: Router) { }
-
- ngOnInit() {
-    setTimeout(() => {
-      this.router.navigateByUrl('/home', { replaceUrl: true });
-    }, 5000); 
-  }
 
 }

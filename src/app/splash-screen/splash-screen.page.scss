@@ -7,31 +7,36 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between; /* Distribuye espacio entre elementos */
   align-items: center;
   text-align: center;
-  padding: 20px;
+  padding: 40px 20px; /* Más espacio vertical */
   color: white;
 }
 
 .icon {
-  width: 120px;
-  height: 120px;
-  margin-bottom: 20px;
+  width: 400px; /* Imagen más grande */
+  height: 400px;
+  margin: 20px 0;
 }
 
 /* Texto */
 .app-name {
   font-size: 50px;
   font-weight: bold;
+  margin-top: 50px;
+  color: white;
+}
+
+.subject {
+  font-size: 32px;
   margin: 10px 0;
   color: white;
 }
 
-.subject,
 .author {
   font-size: 40px;
-  margin: 5px 0;
+  margin: 10px 0;
   color: white;
 }
 
@@ -51,6 +56,8 @@
 .animate-slide-in-right {
   animation: slideInRight 2.5s ease-out;
 }
+
+/* Keyframes... (sin cambios) */
 
 
 /* Keyframes */

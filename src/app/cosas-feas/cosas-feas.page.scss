@@ -30,3 +30,40 @@
 .fab-icon {
   color: #6fc530;
 }
+
+.image-container {
+  position: relative;
+  cursor: pointer;
+
+  img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 8px;
+  }
+
+  .image-info {
+    position: absolute;
+    bottom: 10px;       /* Ponelo cerca del borde inferior o donde prefieras */
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
+    padding: 4px 8px;
+    border-radius: 8px;
+    width: auto;
+    max-width: 90%;
+    font-size: 0.9rem;
+    pointer-events: none;
+  }
+}
+
+.email {
+  font-weight: bold;
+}
+
+.date {
+  font-style: italic;
+  font-size: 0.7rem;
+}

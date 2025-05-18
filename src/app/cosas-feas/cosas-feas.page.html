@@ -1,23 +1,26 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>Cosas Feas</ion-title>
+      <ion-buttons slot="end">
+        <ion-back-button (click)="navBack()" ></ion-back-button>
+      </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding content-background">
-  <ion-grid>
-    <ion-row>
-      <ion-col size="12" *ngFor="let image of images">
-        <img
-          [src]="image"
-          (click)="voteForImage(image)"
-          alt="Imagen"
-          [class.voted]="image === lastVotedUrl"
-          class="votable-image"
-        />
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+<ion-grid>
+  <ion-row>
+    <ion-col size="6" *ngFor="let imageInfo of imageInfos">
+      <div class="image-container">
+        <img [src]="imageInfo.url" [ngClass]="{ 'voted': votedUrls.includes(imageInfo.url) }" (click)="voteForImage(imageInfo.url)" />
+        <div class="image-info">
+          <div class="email">{{ imageInfo.email }}</div>
+          <div class="date">{{ imageInfo.date | date: 'medium' }}</div>
+        </div>
+      </div>
+    </ion-col>
+  </ion-row>
+</ion-grid>
 
   <ion-fab vertical="bottom" horizontal="end">
     <ion-fab-button class="fab-button">
@@ -43,3 +46,8 @@
     </ion-fab-list>
   </ion-fab>
 </ion-content>
+
+
+<div *ngIf="isLoading" class="spinner-overlay">
+  <ion-spinner name="bubbles" ></ion-spinner>
+</div>

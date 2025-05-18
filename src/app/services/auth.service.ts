@@ -33,28 +33,45 @@ export class AuthService {
     return data;
   }
 
-  async getLastVotedImage(): Promise<{ imageUrl: string; createdAt: string } | null> {
+  // async getLastVotedImage(): Promise<{ imageUrl: string; createdAt: string } | null> {
+  //   const user = await this.auth.currentUser;
+  //   if (!user) throw new Error('No authenticated user');
+
+  //   const { data, error } = await supabase
+  //     .from('votos')
+  //     .select('image_url, created_at')
+  //     .eq('user_id', user.uid)
+  //     .order('created_at', { ascending: false })
+  //     .limit(1)
+  //     .single();
+
+  //   if (error && error.code !== 'PGRST116') {
+  //     throw new Error('Error fetching last vote: ' + error.message);
+  //   }
+
+  //   if (!data) return null;
+
+  //   return {
+  //     imageUrl: data.image_url,
+  //     createdAt: data.created_at
+  //   };
+  // }
+
+  async getVotedImagesByUser(): Promise<string[]> {
     const user = await this.auth.currentUser;
     if (!user) throw new Error('No authenticated user');
 
     const { data, error } = await supabase
       .from('votos')
-      .select('image_url, created_at')
+      .select('image_url')
       .eq('user_id', user.uid)
-      .order('created_at', { ascending: false })
-      .limit(1)
-      .single();
+      .order('created_at', { ascending: false });
 
-    if (error && error.code !== 'PGRST116') {
-      throw new Error('Error fetching last vote: ' + error.message);
+    if (error) {
+      throw new Error('Error fetching voted images: ' + error.message);
     }
 
-    if (!data) return null;
-
-    return {
-      imageUrl: data.image_url,
-      createdAt: data.created_at
-    };
+    return data.map(voto => voto.image_url);
   }
 
   async votarImagen(imageUrl: string): Promise<void> {
@@ -79,7 +96,9 @@ export class AuthService {
     const response = await fetch(webPath);
     const blob = await response.blob();
 
-    const timestamp = new Date().toISOString().split('T')[0].replace(/-/g, '');
+    const now = new Date();
+    const timestamp = `${now.getFullYear()}${(now.getMonth() + 1).toString().padStart(2, '0')}${now.getDate().toString().padStart(2, '0')}-${now.getHours().toString().padStart(2, '0')}${now.getMinutes().toString().padStart(2, '0')}${now.getSeconds().toString().padStart(2, '0')}`;
+
     const uniqueId = uuidv4().split('-')[0];
     const fileName = `${user.email}-${timestamp}-${uniqueId}.jpeg`;
 
@@ -110,7 +129,9 @@ export class AuthService {
     const response = await fetch(webPath);
     const blob = await response.blob();
 
-    const timestamp = new Date().toISOString().split('T')[0].replace(/-/g, '');
+    const now = new Date();
+    const timestamp = `${now.getFullYear()}${(now.getMonth() + 1).toString().padStart(2, '0')}${now.getDate().toString().padStart(2, '0')}-${now.getHours().toString().padStart(2, '0')}${now.getMinutes().toString().padStart(2, '0')}${now.getSeconds().toString().padStart(2, '0')}`;
+
     const uniqueId = uuidv4().split('-')[0];
     const fileName = `${user.email}-${timestamp}-${uniqueId}.jpeg`;
 
@@ -129,104 +150,104 @@ export class AuthService {
     const { data: publicUrlData } = supabase
       .storage
       .from('relevamientovisual')
-      .getPublicUrl(`cosasFeas/${fileName}`);
+      .getPublicUrl(`cosasLindas/${fileName}`);
 
     return publicUrlData.publicUrl;
   }
 
 
 
-async getAllImages(): Promise<string[]> {
-  const user = await this.auth.currentUser;
-  if (!user || !user.email) throw new Error('No authenticated user');
+  async getAllImages(): Promise<string[]> {
+    const user = await this.auth.currentUser;
+    if (!user || !user.email) throw new Error('No authenticated user');
 
-  console.log('User email:', user.email);
+    console.log('User email:', user.email);
 
-  const { data: lindasData, error: lindasError } = await supabase
-    .storage
-    .from('relevamientovisual')
-    .list('cosasLindas', { limit: 100 });
-
-  if (lindasError) throw new Error('Failed to list cosasLindas images: ' + lindasError.message);
-
-  const { data: feasData, error: feasError } = await supabase
-    .storage
-    .from('relevamientovisual')
-    .list('cosasFeas', { limit: 100 });
-
-  if (feasError) throw new Error('Failed to list cosasFeas: ' + feasError.message);
-
-  console.log('CosasLindas files:', lindasData.map(f => f.name));
-  console.log('CosasFeas files:', feasData.map(f => f.name));
-
-  const lindasUrls = lindasData
-    .filter(file => file.name.toLowerCase().includes(user.email!.toLowerCase()))
-    .map(file =>
-      supabase.storage
-        .from('relevamientovisual')
-        .getPublicUrl(`cosasLindas/${file.name}`).data.publicUrl
-    );
-
-  const feasUrls = feasData
-    .filter(file => file.name.toLowerCase().includes(user.email!.toLowerCase()))
-    .map(file =>
-      supabase.storage
-        .from('relevamientovisual')
-        .getPublicUrl(`cosasFeas/${file.name}`).data.publicUrl
-    );
-
-  return [...lindasUrls, ...feasUrls];
-}
-
-
-
-
-
-
-async getCosasFeasImages(): Promise<string[]> {
-  const { data, error } = await supabase
-    .storage
-    .from('relevamientovisual')
-    .list('cosasFeas', { limit: 100 });
-
-  if (error) throw new Error('Failed to list images: ' + error.message);
-
-  // Filtrar archivos no deseados y luego invertir el orden
-  const filteredData = data
-    .filter(file => !file.name.includes('.emptyFolderPlaceholder'))
-    .reverse();
-
-  return filteredData.map(file => {
-    const publicUrl = supabase.storage
+    const { data: lindasData, error: lindasError } = await supabase
+      .storage
       .from('relevamientovisual')
-      .getPublicUrl(`cosasFeas/${file.name}`).data.publicUrl;
+      .list('cosasLindas', { limit: 100 });
 
-    return publicUrl;
-  });
-}
+    if (lindasError) throw new Error('Failed to list cosasLindas images: ' + lindasError.message);
 
-
-async getCosasLindasImages(): Promise<string[]> {
-  const { data, error } = await supabase
-    .storage
-    .from('relevamientovisual')
-    .list('cosasLindas', { limit: 100 });
-
-  if (error) throw new Error('Failed to list images: ' + error.message);
-
-  // Filtrar archivos no deseados
-  const filteredData = data
-    .filter(file => !file.name.includes('.emptyFolderPlaceholder'))
-    .reverse(); // Invertir el orden
-
-  return filteredData.map(file => {
-    const publicUrl = supabase.storage
+    const { data: feasData, error: feasError } = await supabase
+      .storage
       .from('relevamientovisual')
-      .getPublicUrl(`cosasLindas/${file.name}`).data.publicUrl;
+      .list('cosasFeas', { limit: 100 });
 
-    return publicUrl;
-  });
-}
+    if (feasError) throw new Error('Failed to list cosasFeas: ' + feasError.message);
+
+    console.log('CosasLindas files:', lindasData.map(f => f.name));
+    console.log('CosasFeas files:', feasData.map(f => f.name));
+
+    const lindasUrls = lindasData
+      .filter(file => file.name.toLowerCase().includes(user.email!.toLowerCase()))
+      .map(file =>
+        supabase.storage
+          .from('relevamientovisual')
+          .getPublicUrl(`cosasLindas/${file.name}`).data.publicUrl
+      );
+
+    const feasUrls = feasData
+      .filter(file => file.name.toLowerCase().includes(user.email!.toLowerCase()))
+      .map(file =>
+        supabase.storage
+          .from('relevamientovisual')
+          .getPublicUrl(`cosasFeas/${file.name}`).data.publicUrl
+      );
+
+    return [...lindasUrls, ...feasUrls];
+  }
+
+
+
+
+
+
+  async getCosasFeasImages(): Promise<string[]> {
+    const { data, error } = await supabase
+      .storage
+      .from('relevamientovisual')
+      .list('cosasFeas', { limit: 100 });
+
+    if (error) throw new Error('Failed to list images: ' + error.message);
+
+    // Filtrar archivos no deseados y luego invertir el orden
+    const filteredData = data
+      .filter(file => !file.name.includes('.emptyFolderPlaceholder'))
+      .reverse();
+
+    return filteredData.map(file => {
+      const publicUrl = supabase.storage
+        .from('relevamientovisual')
+        .getPublicUrl(`cosasFeas/${file.name}`).data.publicUrl;
+
+      return publicUrl;
+    });
+  }
+
+
+  async getCosasLindasImages(): Promise<string[]> {
+    const { data, error } = await supabase
+      .storage
+      .from('relevamientovisual')
+      .list('cosasLindas', { limit: 100 });
+
+    if (error) throw new Error('Failed to list images: ' + error.message);
+
+    // Filtrar archivos no deseados
+    const filteredData = data
+      .filter(file => !file.name.includes('.emptyFolderPlaceholder'))
+      .reverse(); // Invertir el orden
+
+    return filteredData.map(file => {
+      const publicUrl = supabase.storage
+        .from('relevamientovisual')
+        .getPublicUrl(`cosasLindas/${file.name}`).data.publicUrl;
+
+      return publicUrl;
+    });
+  }
 
 
 
@@ -286,7 +307,7 @@ async getCosasLindasImages(): Promise<string[]> {
     return data.filter((item: { image_url: string; vote_count: number }) => item.image_url.includes('cosasLindas'));
   }
 
-    async getTopVotedImagesFeas(): Promise<{ image_url: string; vote_count: number }[]> {
+  async getTopVotedImagesFeas(): Promise<{ image_url: string; vote_count: number }[]> {
     const { data, error } = await supabase.rpc('get_top_voted_images');
 
     if (error) throw new Error('Error fetching top voted images: ' + error.message);

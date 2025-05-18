@@ -6,7 +6,7 @@
 
       <ion-buttons slot="end">
         <ion-button (click)="authService.logOut()">
-          <ion-icon name="log-out" color="dark" class="white-icon"></ion-icon>
+          <ion-icon name="log-out" color="light" ></ion-icon>
         </ion-button>
       </ion-buttons>
 
@@ -28,3 +28,7 @@
   </div>
 
 </ion-content>
+
+<div *ngIf="isLoading" class="spinner-overlay">
+  <ion-spinner name="bubbles" ></ion-spinner>
+</div>

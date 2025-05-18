@@ -1,7 +1,13 @@
-import { Component } from '@angular/core';
-import { IonHeader, IonToolbar, IonTitle, IonContent, IonCol, IonLabel, IonItem, IonInput, IonButton, IonRow } from '@ionic/angular/standalone';
+import { Component, OnInit } from '@angular/core';
+import {
+  IonHeader, IonToolbar, IonTitle, IonContent,
+  IonCol, IonLabel, IonItem, IonInput, IonButton,
+  IonRow, IonSpinner
+} from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
-import { FormControl, FormsModule, Validators, FormGroup, FormBuilder } from '@angular/forms';
+import {
+  FormControl, FormsModule, Validators, FormGroup, FormBuilder
+} from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SpinnerService } from '../services/spinner.service';
 import { AuthService } from '../services/auth.service';
@@ -13,12 +19,18 @@ import { AlertController } from '@ionic/angular/standalone';
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
   standalone: true,
-  imports: [IonRow, IonButton, IonInput, IonItem, IonLabel, IonCol, IonHeader, IonToolbar, IonTitle, IonContent, CommonModule, ReactiveFormsModule],
+  imports: [
+    IonRow, IonButton, IonInput,
+    IonItem, IonLabel, IonCol, IonHeader,
+    IonToolbar, IonTitle, IonContent,IonSpinner,
+    CommonModule, ReactiveFormsModule
+  ],
 })
 export class HomePage {
   email = new FormControl('', [Validators.required, Validators.email]);
   password = new FormControl('', Validators.required);
   loginForm: FormGroup;
+  isLoading: boolean;
 
   constructor(
     private fb: FormBuilder,
@@ -27,6 +39,7 @@ export class HomePage {
     private router: Router,
     private spinnerService: SpinnerService
   ) {
+    this.isLoading= false,
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
@@ -36,28 +49,28 @@ export class HomePage {
 async onLogin() {
   if (this.loginForm.valid) {
     const { email, password } = this.loginForm.value;
-
-    this.spinnerService.show(); // Mostrar spinner
-
+      this.isLoading = true;
     try {
       await this.authService.login(email, password);
-
-      // Esperar 2 segundos antes de navegar
-   
-
-      this.router.navigate(['/main']); // Luego navegar
+      this.router.navigate(['/main']);
+       this.loginForm.reset({
+          email: '',
+          password: ''
+        })
     } catch (err: any) {
-      this.showLoginError(err);
+     this.isLoading = false;
+      await this.showLoginError(err);
     } finally {
-      this.spinnerService.hide(); // Ocultar spinner al final
+      this.isLoading = false;
     }
   }
 }
 
 
+
   async showLoginError(error: any) {
     let mensaje = 'Ha ocurrido un error al iniciar sesión.';
-    console.log(error.code)
+    console.log(error.code);
     if (error.code) {
       switch (error.code) {
         case 'auth/user-not-found':
@@ -80,7 +93,7 @@ async onLogin() {
     const alert = await this.alertController.create({
       header: 'Error de Inicio de Sesión',
       message: mensaje,
-      buttons: ['OK']
+      buttons: ['OK'],
     });
 
     await alert.present();
@@ -89,15 +102,14 @@ async onLogin() {
   fillTestUser1() {
     this.loginForm.setValue({
       email: 'test1@example.com',
-      password: 'password123'
+      password: 'password123',
     });
   }
 
   fillTestUser2() {
-
     this.loginForm.setValue({
       email: 'test2@example.com',
-      password: 'password456'
+      password: 'password456',
     });
   }
 }

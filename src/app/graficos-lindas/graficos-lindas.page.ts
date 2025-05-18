@@ -4,6 +4,7 @@ import { IonicModule } from '@ionic/angular';
 import { AuthService } from '../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { SpinnerService } from '../services/spinner.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-graficos',
@@ -14,31 +15,30 @@ import { SpinnerService } from '../services/spinner.service';
 })
 export class GraficosLindasPage implements AfterViewInit {
   topImages: { image_url: string; vote_count: number }[] = [];
+  isLoading: boolean;
 
-  constructor(private authService: AuthService, private spinnerService:SpinnerService) {}
+  constructor(private authService: AuthService, private spinnerService: SpinnerService, private router:Router) { this.isLoading = false }
 
-async ngAfterViewInit() {
-  try {
-    this.spinnerService.show();
+  async ngAfterViewInit() {
+    try {
+      this.isLoading = true;
+      const result = await this.authService.getTopVotedImagesLindas();
+      console.log('Canvas encontrado:', document.getElementById('myPieChart'));
+      console.log(result);
+      this.topImages = result.map(item => ({
+        image_url: item.image_url ?? item.image_url,
+        vote_count: item.vote_count ?? item.vote_count,
+      }));
 
-    const result = await this.authService.getTopVotedImagesLindas();
-    console.log('Canvas encontrado:', document.getElementById('myPieChart'));
-    console.log(result);
+      if (this.topImages.length) {
+        this.renderPieChart();
+      }
 
-    this.topImages = result.map(item => ({
-      image_url: item.image_url ?? item.image_url,
-      vote_count: item.vote_count ?? item.vote_count,
-    }));
-
-    if (this.topImages.length) {
-      this.renderPieChart();
+      // Espera 2 segundos para que se vea el spinner
+    } finally {
+      this.isLoading = false;
     }
-
-    // Espera 2 segundos para que se vea el spinner
-  } finally {
-    this.spinnerService.hide();
   }
-}
 
   renderPieChart() {
     const labels = this.topImages.map((_, i) => `Imagen ${i + 1}`);
@@ -51,17 +51,17 @@ async ngAfterViewInit() {
       return img;
     });
 
-  const canvas = document.getElementById('myPieChart') as HTMLCanvasElement;
-  if (!canvas) {
-    console.error('Canvas not found');
-    return;
-  }
+    const canvas = document.getElementById('myPieChart') as HTMLCanvasElement;
+    if (!canvas) {
+      console.error('Canvas not found');
+      return;
+    }
 
-  const ctx = canvas.getContext('2d');
-  if (!ctx) {
-    console.error('Failed to get 2D context');
-    return;
-  }
+    const ctx = canvas.getContext('2d');
+    if (!ctx) {
+      console.error('Failed to get 2D context');
+      return;
+    }
 
     new Chart(ctx, {
       type: 'pie',
@@ -113,5 +113,9 @@ async ngAfterViewInit() {
         }
       }
     });
+  }
+
+    navBack(){
+    this.router.navigate(['/cosas-lindas']);
   }
 }

@@ -1,4 +1,3 @@
-// spinner.service.ts
 import { Injectable } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
 
@@ -7,34 +6,36 @@ import { LoadingController } from '@ionic/angular';
 })
 export class SpinnerService {
   private loadingElement: HTMLIonLoadingElement | null = null;
+  private isLoading = false;
 
   constructor(private loadingCtrl: LoadingController) {}
 
-  async show() {
+  async show(message: string = '', spinnerType: 'crescent' | 'bubbles' | 'circles' | 'dots' | 'lines' | null = 'crescent') {
+    if (this.isLoading) {
+      return;
+    }
+    this.isLoading = true;
+
     this.loadingElement = await this.loadingCtrl.create({
-      message: '',
-      spinner: 'crescent', // Usa un spinner incorporado como fallback
+      spinner: 'dots',
       cssClass: 'custom-spinner-class',
       backdropDismiss: false,
       translucent: true,
     });
 
-    this.loadingElement = await this.loadingCtrl.create({
-  message: `
-    <div class="spinner-wrapper">
-      <img src="assets/icons/icon-96.webp" class="app-logo-spinner" />
-    </div>
-  `,
-  spinner: null, // Desactiva el spinner por defecto
-  cssClass: 'custom-spinner-class',
-  backdropDismiss: false,
-});
+    await this.loadingElement.present();
   }
 
   async hide() {
-    if (this.loadingElement) {
-      await this.loadingElement.dismiss();
-      this.loadingElement = null;
+    if (this.isLoading && this.loadingElement) {
+      try {
+        await this.loadingElement.dismiss();
+      } catch (error) {
+        console.error('Error al ocultar el spinner:', error);
+      } finally {
+        this.loadingElement = null;
+        this.isLoading = false;
+      }
     }
   }
 }
