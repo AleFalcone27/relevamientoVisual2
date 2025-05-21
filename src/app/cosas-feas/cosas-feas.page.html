@@ -1,53 +1,66 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>Cosas Feas</ion-title>
-      <ion-buttons slot="end">
-        <ion-back-button (click)="navBack()" ></ion-back-button>
-      </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-back-button (click)="navBack()"></ion-back-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding content-background">
-<ion-grid>
-  <ion-row>
-    <ion-col size="6" *ngFor="let imageInfo of imageInfos">
-      <div class="image-container">
-        <img [src]="imageInfo.url" [ngClass]="{ 'voted': votedUrls.includes(imageInfo.url) }" (click)="voteForImage(imageInfo.url)" />
-        <div class="image-info">
-          <div class="email">{{ imageInfo.email }}</div>
-          <div class="date">{{ imageInfo.date | date: 'medium' }}</div>
+<ion-content class="ion-padding  content-background">
+  
+  <ion-grid *ngIf="imageInfos.length > 0; else noImages">
+    <ion-row>
+      <ion-col size="12" *ngFor="let imageInfo of imageInfos">
+        <div class="image-container">
+          <img [src]="imageInfo.url" [ngClass]="{ 'voted': votedUrls.includes(imageInfo.url) }"
+            (click)="voteForImage(imageInfo.url)" />
+          <div class="image-info">
+            <div class="email">{{ imageInfo.email }}</div>
+            <div class="date">{{ imageInfo.date | date: 'medium' }}</div>
+          </div>
         </div>
-      </div>
-    </ion-col>
-  </ion-row>
-</ion-grid>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
-  <ion-fab vertical="bottom" horizontal="end">
-    <ion-fab-button class="fab-button">
-      <ion-icon name="add-outline" class="fab-icon"></ion-icon>
-    </ion-fab-button>
 
-    <ion-fab-list side="top">
-      <ion-fab-button class="fab-button" (click)="openCamera()">
-        <ion-icon name="camera-outline" class="fab-icon"></ion-icon>
+  <!-- Template alternativo -->
+  <ng-template #noImages>
+    <div class="no-images-message">
+      No hay fotos disponibles.
+    </div>
+  </ng-template>
+
+ <ion-footer>
+    <ion-fab vertical="bottom" horizontal="end" class="fixed-fab">
+      <ion-fab-button class="fab-button">
+        <ion-icon name="add-outline" class="fab-icon"></ion-icon>
       </ion-fab-button>
 
-      <ion-fab-button class="fab-button" (click)="openGallery()">
-        <ion-icon name="image-outline" class="fab-icon"></ion-icon>
-      </ion-fab-button>
+      <ion-fab-list side="top">
+        <ion-fab-button class="fab-button" (click)="openCamera()">
+          <ion-icon name="camera-outline" class="fab-icon"></ion-icon>
+        </ion-fab-button>
 
-      <ion-fab-button class="fab-button" (click)="goToCharts()">
-        <ion-icon name="pie-chart-outline" class="fab-icon"></ion-icon>
-      </ion-fab-button>
+        <ion-fab-button class="fab-button" (click)="openGallery()">
+          <ion-icon name="image-outline" class="fab-icon"></ion-icon>
+        </ion-fab-button>
 
-      <ion-fab-button class="fab-button" (click)="goToUserGallery()">
-        <ion-icon name="albums-outline" class="fab-icon"></ion-icon>
-      </ion-fab-button>
-    </ion-fab-list>
-  </ion-fab>
+        <ion-fab-button class="fab-button" (click)="goToCharts()">
+          <ion-icon name="pie-chart-outline" class="fab-icon"></ion-icon>
+        </ion-fab-button>
+
+        <ion-fab-button class="fab-button" (click)="goToUserGallery()">
+          <ion-icon name="albums-outline" class="fab-icon"></ion-icon>
+        </ion-fab-button>
+      </ion-fab-list>
+    </ion-fab>
+  </ion-footer>
+
 </ion-content>
 
 
 <div *ngIf="isLoading" class="spinner-overlay">
-  <ion-spinner name="bubbles" ></ion-spinner>
+  <ion-spinner name="bubbles"></ion-spinner>
 </div>

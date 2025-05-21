@@ -9,14 +9,14 @@ import { AuthService } from '../services/auth.service';
 import { SpinnerService } from '../services/spinner.service';
 
 import { AlertController } from '@ionic/angular';
-import { IonHeader, IonToolbar, IonTitle, IonContent, IonGrid, IonRow, IonCol, IonFab, IonFabButton, IonIcon, IonFabList, IonSpinner, IonButtons, IonButton, IonBackButton } from "@ionic/angular/standalone";
+import { IonHeader, IonToolbar, IonTitle, IonContent, IonGrid, IonRow, IonCol, IonFab, IonFabButton, IonIcon, IonFabList, IonSpinner, IonButtons, IonButton, IonBackButton, IonFooter } from "@ionic/angular/standalone";
 
 @Component({
   selector: 'app-cosas-feas',
   templateUrl: './cosas-feas.page.html',
   styleUrls: ['./cosas-feas.page.scss'],
   standalone: true,
-  imports: [IonBackButton, IonButtons, IonSpinner, IonFabList, IonIcon, IonFabButton, IonFab, IonCol, IonRow, IonGrid, IonContent, IonTitle, IonToolbar, IonHeader, CommonModule, FormsModule]
+  imports: [IonFooter, IonBackButton, IonButtons, IonSpinner, IonFabList, IonIcon, IonFabButton, IonFab, IonCol, IonRow, IonGrid, IonContent, IonTitle, IonToolbar, IonHeader, CommonModule, FormsModule]
 })
 export class CosasFeasPage implements OnInit {
   images: string[] = [];
@@ -27,7 +27,7 @@ export class CosasFeasPage implements OnInit {
 
 
   constructor(private router: Router, private authService: AuthService, private SpinnerService: SpinnerService, private alertCtrl: AlertController) {
-    addIcons({ 'addOutline': addOutline, 'cameraOutline': cameraOutline, 'imageOutline': imageOutline, 'pieChartOutline': pieChartOutline, 'albumsOutline': albumsOutline, });
+    addIcons({'addOutline':addOutline,'cameraOutline':cameraOutline,'imageOutline':imageOutline,'pieChartOutline':pieChartOutline,'albumsOutline':albumsOutline,});
     this.isLoading = false
   }
 

@@ -1,9 +1,4 @@
-.content-background {
-  --background: #36b94f;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+
 
 .votable-image {
   width: 100%;
@@ -20,15 +15,6 @@
   border-radius: 12px;
   box-shadow: 0 0 18px rgba(0, 255, 0, 0.6);
   transform: scale(1.08);
-}
-
-.fab-button {
-  --background: white;
-  --color: #6fc530;
-}
-
-.fab-icon {
-  color: #6fc530;
 }
 
 .image-container {
@@ -67,3 +53,4 @@
   font-style: italic;
   font-size: 0.7rem;
 }
+

@@ -4,7 +4,7 @@
   align-items: center;
   justify-content: center;
   height: 100%;
-  background-color: rgba(0, 200, 100, 0.2); // verde clarito
+  background-color: #2e8b57; // verde clarito
   padding: 16px;
   box-sizing: border-box;
   position: relative;
@@ -23,7 +23,7 @@
 
 
 .login-content {
-  --background: #36B94F;
+  --background: #2e8b57;
   display: flex;
   flex-direction: column;
   justify-content: center;   // centra vertical
@@ -57,7 +57,7 @@
 
 ion-item {
   --background: transparent;
-  --highlight-color-focused: #00cc66;
+  --highlight-color-focused: #2e8b57;
 }
 
 ion-label, ion-input {
@@ -69,8 +69,7 @@ ion-note {
 }
 
 ion-button {
-  --background: #00cc66;
-  --background-hover: #00b359;
+  --background: #3cb371;
   --color: white;
 }
 
@@ -138,6 +137,6 @@ ion-button {
 .quick-access ion-button {
   --border-color: transparent;
   --color: white;
-  --background: #00cc66;
+  --background: #3cb371;
   --background-hover: #00b359;
 }

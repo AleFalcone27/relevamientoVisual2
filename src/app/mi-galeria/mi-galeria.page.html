@@ -1,22 +1,32 @@
 <ion-header>
   <ion-toolbar class="custom-toolbar">
     <ion-title>Mi Galería</ion-title>
-      <ion-buttons slot="end">
-        <ion-back-button (click)="navBack()" ></ion-back-button>
-      </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-back-button (click)="navBack()"></ion-back-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding content-background" scrollable>
-  <ion-grid>
+
+  <ion-grid *ngIf="images.length > 0; else noImages">
     <ion-row justify-content-center>
       <ion-col size="12" *ngFor="let image of images">
-        <img [src]="image" alt="Imagen" />
+        <div class="image-container">
+          <img [src]="image" alt="Imagen" />
+        </div>
       </ion-col>
     </ion-row>
   </ion-grid>
+
+  <ng-template #noImages>
+    <div class="no-images-message">
+      No hay fotos disponibles.
+    </div>
+  </ng-template>
+
 </ion-content>
 
 <div *ngIf="isLoading" class="spinner-overlay">
-  <ion-spinner name="bubbles" ></ion-spinner>
+  <ion-spinner name="bubbles"></ion-spinner>
 </div>

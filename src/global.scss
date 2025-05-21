@@ -37,16 +37,15 @@
 @import '@ionic/angular/css/palettes/dark.system.css';
 
 .content-background {
-  --background: #36B94F; // 🎨 Cambiá este color por el que prefieras
+  --background: #2e8b57; // Verde más oscuro y apagado (SeaGreen)
   background-color: var(--background);
 }
 
 ion-header, ion-toolbar {
-  --background: #2E7D32; /* verde oscuro */
+  --background:#3cb371; /* Verde mucho más oscuro */
   background-color: var(--background);
   color: white;
 }
-
 ion-toolbar ion-title {
   text-align: center;
   width: 100%;
@@ -82,7 +81,7 @@ ion-loading.custom-spinner-class .loading-wrapper {
   justify-content: center;
   align-items: center;
   z-index: 9999; // Asegura que esté encima de todo
-  --color: #36B94F;
+  --color:  #3cb371;
 }
 
 .spinner-overlay ion-spinner {
@@ -95,3 +94,42 @@ ion-back-button {
   color: white;
   margin-right: 16px; // o el valor que necesites
 }
+
+.content-background {
+  --background:  #2e8b57;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.fab-button {
+  --background: white;
+  --color: #2e8b57;
+}
+
+.fab-icon {
+  color: #2e8b57;
+}
+
+
+.no-images-message {
+  background-color: white;
+  color: #2e8b57; // Verde que estás usando
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.2rem;
+  border-radius: 8px;
+  margin: 2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.fixed-fab {
+  position: fixed;  /* Fix the button at the bottom-right of the screen */
+  bottom: 20px;     /* 20px from the bottom */
+  right: 20px;      /* 20px from the right */
+  z-index: 1000;    /* Ensure it appears above other content */
+}
+
+
+
+// #3cb371

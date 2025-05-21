@@ -8,14 +8,14 @@ import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { SpinnerService } from '../services/spinner.service';
 import { AlertController } from '@ionic/angular';
-import { IonHeader, IonContent, IonToolbar, IonTitle, IonGrid, IonRow, IonCol, IonFab, IonFabButton, IonIcon, IonFabList, IonSpinner, IonButtons, IonBackButton } from "@ionic/angular/standalone";
+import { IonHeader, IonContent, IonToolbar, IonTitle, IonGrid, IonRow, IonCol, IonFab, IonFabButton, IonIcon, IonFabList, IonSpinner, IonButtons, IonBackButton, IonFooter } from "@ionic/angular/standalone";
 
 @Component({
   selector: 'app-cosas-lindas',
   templateUrl: './cosas-lindas.page.html',
   styleUrls: ['./cosas-lindas.page.scss'],
   standalone: true,
-  imports: [IonBackButton, IonButtons, IonSpinner, IonFabList, IonIcon, IonFabButton, IonFab, IonCol, IonRow, IonGrid, IonTitle, IonToolbar, IonContent, IonHeader, CommonModule, FormsModule]
+  imports: [IonFooter, IonBackButton, IonButtons, IonSpinner, IonFabList, IonIcon, IonFabButton, IonFab, IonCol, IonRow, IonGrid, IonTitle, IonToolbar, IonContent, IonHeader, CommonModule, FormsModule]
 })
 export class CosasLindasPage implements OnInit {
   images: string[] = [];
@@ -25,7 +25,7 @@ export class CosasLindasPage implements OnInit {
   imageInfos: { url: string; email: string; date: Date | null }[] = [];
 
   constructor(private router: Router, private authService: AuthService, private SpinnerService: SpinnerService, private alertCtrl: AlertController) {
-    addIcons({ 'addOutline': addOutline, 'cameraOutline': cameraOutline, 'imageOutline': imageOutline, 'pieChartOutline': pieChartOutline, 'albumsOutline': albumsOutline, });
+    addIcons({'addOutline':addOutline,'cameraOutline':cameraOutline,'imageOutline':imageOutline,'pieChartOutline':pieChartOutline,'albumsOutline':albumsOutline,});
     this.isLoading = false;;
   }
 
